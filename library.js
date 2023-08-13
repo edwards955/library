@@ -7,6 +7,9 @@ let myLibrary = [
 ];
 
 const bookTable = document.querySelector('.bookTable');
+const newBookButton = document.querySelector('#newBookButton');
+const bookDialog = document.querySelector('#bookDialog');
+
 updateBookTable();
 
 function Book(title, author, pages, read) {
@@ -39,3 +42,7 @@ function updateBookTable() {
         bookTable.appendChild(row);
     });
 }
+
+newBookButton.addEventListener('click', () => {
+    bookDialog.showModal();
+})
