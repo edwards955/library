@@ -9,6 +9,9 @@ let myLibrary = [
 const bookTable = document.querySelector('.bookTable');
 const newBookButton = document.querySelector('#newBookButton');
 const bookDialog = document.querySelector('#bookDialog');
+const saveBookButton = document.querySelector('#saveBook');
+const newBookForm = document.querySelector('#newBookForm');
+const cancelButton = document.querySelector('#cancel');
 
 updateBookTable();
 
@@ -45,4 +48,19 @@ function updateBookTable() {
 
 newBookButton.addEventListener('click', () => {
     bookDialog.showModal();
+})
+
+saveBookButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    const data = new FormData(newBookForm);
+    const book = Object.fromEntries(data.entries());
+    console.log(book);
+    addBookToLibrary(book);
+    bookDialog.close();
+    updateBookTable();
+})
+
+cancelButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    bookDialog.close();
 })
