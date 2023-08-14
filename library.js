@@ -1,9 +1,9 @@
 let myLibrary = [
-    { title: 'Batman', author: "Bruce Wayne", pages: 100, read: "not yet read"},
-    { title: 'Batman', author: "Bruce Wayne", pages: 100, read: "not yet read"},
-    { title: 'Batman', author: "Bruce Wayne", pages: 100, read: "not yet read"},
-    { title: 'Batman', author: "Bruce Wayne", pages: 100, read: "not yet read"},
-    { title: 'Batman', author: "Bruce Wayne", pages: 100, read: "not yet read"},
+    { title: 'Batman: Year One', author: "Frank Miller", pages: 250, read: "not yet read"},
+    { title: 'Batman: Hush', author: "Jeph Loeb", pages: 300, read: "read"},
+    { title: 'Batman: The Killing Joke', author: "Alan Moore", pages: 200, read: "read"},
+    { title: 'Gotham by Gaslight', author: "Brian Augustyn", pages: 350, read: "not yet read"},
+    { title: 'Joker War', author: "James Tynion IV", pages: 250, read: "not yet read"},
 ];
 
 const bookTable = document.querySelector('.bookTable');
@@ -30,7 +30,7 @@ function addBookToLibrary(book) {
 function updateBookTable() {
     clearBookTable();
     createHeaderRow();
-    
+    let index = 0;
     myLibrary.forEach((book) => {
         let row = document.createElement('tr');
         let titleCell = document.createElement('td');
@@ -45,6 +45,14 @@ function updateBookTable() {
         let readCell = document.createElement('td');
         readCell.textContent = `${book.read}`;
         row.appendChild(readCell);
+
+        let removeCell = document.createElement('td');
+        let removeButton = document.createElement('button');
+        removeButton.textContent = 'REMOVE'
+        removeButton.setAttribute("data-index", index++)
+        removeCell.appendChild(removeButton);
+        row.appendChild(removeCell);
+
         bookTable.appendChild(row);
     });
 }
@@ -68,6 +76,10 @@ function createHeaderRow() {
     row.appendChild(pagesCell);
     let readCell = document.createElement('td');
     readCell.textContent = `Read`;
+    row.appendChild(readCell);
+    let removeCell = document.createElement('td');
+    removeCell.textContent = 'Remove';
+    row.appendChild(removeCell);
     bookTable.appendChild(row);
 }
 
