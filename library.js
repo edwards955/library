@@ -49,8 +49,9 @@ function updateBookTable() {
         let removeCell = document.createElement('td');
         let removeButton = document.createElement('button');
         removeButton.textContent = 'REMOVE'
-        removeButton.setAttribute("data-index", index++)
-        removeBookEventHandler(removeButton);
+        removeButton.setAttribute("data-index", index)
+        removeBookEventHandler(removeButton, index);
+        index++;
 
         removeCell.appendChild(removeButton);
         row.appendChild(removeCell);
@@ -104,10 +105,9 @@ cancelButton.addEventListener('click', (e) => {
     bookDialog.close();
 })
 
-function removeBookEventHandler(button) {
+function removeBookEventHandler(button, index) {
     button.addEventListener('click', (e) => {
-        let index = Number(e.target.getAttribute('data-index'));
-        myLibrary.splice(index, index);
+        myLibrary.splice(index, 1);
         updateBookTable();
     })
 }
