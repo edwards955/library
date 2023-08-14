@@ -1,9 +1,11 @@
+// Create Library Array for storing book information
 let myLibrary = [
     new Book('Batman: Year One', "Frank Miller", 250, "not yet read"),
     new Book('Gotham by Gaslight', 'Brian Augustyn', 350, 'read'),
     new Book('Joker War', 'James Tynion IV', 250, 'not yet read'),
 ]
 
+// Select DOM elements to manipulate
 const bookTable = document.querySelector('.bookTable');
 const newBookButton = document.querySelector('#newBookButton');
 const bookDialog = document.querySelector('#bookDialog');
@@ -11,6 +13,7 @@ const saveBookButton = document.querySelector('#saveBook');
 const newBookForm = document.querySelector('#newBookForm');
 const cancelButton = document.querySelector('#cancel');
 
+// Update page with book data upon initial load
 updateBookTable();
 
 function Book(title, author, pages, read) {
@@ -36,7 +39,11 @@ function addBookToLibrary(book) {
 function updateBookTable() {
     clearBookTable();
     createHeaderRow();
+    
+    // Index used for setting Remove and Toggle button data attributes
     let index = 0;
+
+    // Begin adding book data to table
     myLibrary.forEach((book) => {
         let row = document.createElement('tr');
         let titleCell = document.createElement('td');
@@ -52,6 +59,7 @@ function updateBookTable() {
         readCell.textContent = `${book.read}`;
         row.appendChild(readCell);
 
+        // Create Remove button and attach event handler for removing book data
         let removeCell = document.createElement('td');
         let removeButton = document.createElement('button');
         removeButton.textContent = 'REMOVE'
@@ -60,6 +68,7 @@ function updateBookTable() {
         removeCell.appendChild(removeButton);
         row.appendChild(removeCell);
 
+        // Create Toggle button and attach event handler for modifying book data
         let toggleCell = document.createElement('td');
         let toggleButton = document.createElement('button');
         toggleButton.textContent = 'Toggle Read';
@@ -67,7 +76,7 @@ function updateBookTable() {
         toggleReadEventHandler(toggleButton, index);
         toggleCell.appendChild(toggleButton);
         row.appendChild(toggleCell);
-
+    
         index++;
         bookTable.appendChild(row);
     });
@@ -102,6 +111,7 @@ function createHeaderRow() {
     bookTable.appendChild(row);
 }
 
+// Event Handler for displaying 'NEW BOOK' form
 newBookButton.addEventListener('click', () => {
     bookDialog.showModal();
 })
