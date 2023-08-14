@@ -28,6 +28,9 @@ function addBookToLibrary(book) {
 }
 
 function updateBookTable() {
+    clearBookTable();
+    createHeaderRow();
+    
     myLibrary.forEach((book) => {
         let row = document.createElement('tr');
         let titleCell = document.createElement('td');
@@ -44,6 +47,28 @@ function updateBookTable() {
         row.appendChild(readCell);
         bookTable.appendChild(row);
     });
+}
+
+function clearBookTable() {
+    while (bookTable.hasChildNodes()) {
+        bookTable.removeChild(bookTable.firstChild);
+    }
+}
+
+function createHeaderRow() {
+    let row = document.createElement('tr');
+    let titleCell = document.createElement('td');
+    titleCell.textContent = `Title`;
+    row.appendChild(titleCell);
+    let authorCell = document.createElement('td');
+    authorCell.textContent = `Author`;
+    row.appendChild(authorCell);
+    let pagesCell = document.createElement('td');
+    pagesCell.textContent = `Pages`;
+    row.appendChild(pagesCell);
+    let readCell = document.createElement('td');
+    readCell.textContent = `Read`;
+    bookTable.appendChild(row);
 }
 
 newBookButton.addEventListener('click', () => {
