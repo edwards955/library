@@ -1,10 +1,8 @@
 let myLibrary = [
-    { title: 'Batman: Year One', author: "Frank Miller", pages: 250, read: "not yet read"},
-    { title: 'Batman: Hush', author: "Jeph Loeb", pages: 300, read: "read"},
-    { title: 'Batman: The Killing Joke', author: "Alan Moore", pages: 200, read: "read"},
-    { title: 'Gotham by Gaslight', author: "Brian Augustyn", pages: 350, read: "not yet read"},
-    { title: 'Joker War', author: "James Tynion IV", pages: 250, read: "not yet read"},
-];
+    new Book('Batman: Year One', "Frank Miller", 250, "not yet read"),
+    new Book('Gotham by Gaslight', 'Brian Augustyn', 350, 'read'),
+    new Book('Joker War', 'James Tynion IV', 250, 'not yet read'),
+]
 
 const bookTable = document.querySelector('.bookTable');
 const newBookButton = document.querySelector('#newBookButton');
@@ -21,6 +19,14 @@ function Book(title, author, pages, read) {
     this.pages = pages;
     this.read = read;
     this.info = () => `${title} by ${author}, ${pages} pages, ${read}`;
+}
+
+Book.prototype.toggleRead = function() {
+    if (this.read === 'not yet read') {
+        this.read = 'read';
+    } else {
+        this.read = 'not yet read';
+    }
 }
 
 function addBookToLibrary(book) {
@@ -51,11 +57,18 @@ function updateBookTable() {
         removeButton.textContent = 'REMOVE'
         removeButton.setAttribute("data-index", index)
         removeBookEventHandler(removeButton, index);
-        index++;
-
         removeCell.appendChild(removeButton);
         row.appendChild(removeCell);
 
+        let toggleCell = document.createElement('td');
+        let toggleButton = document.createElement('button');
+        toggleButton.textContent = 'Toggle Read';
+        toggleButton.setAttribute("data-index", index)
+        toggleReadEventHandler(toggleButton, index);
+        toggleCell.appendChild(toggleButton);
+        row.appendChild(toggleCell);
+
+        index++;
         bookTable.appendChild(row);
     });
 }
@@ -83,6 +96,9 @@ function createHeaderRow() {
     let removeCell = document.createElement('td');
     removeCell.textContent = 'Remove';
     row.appendChild(removeCell);
+    let toggleCell = document.createElement('td');
+    toggleCell.textContent = 'Toggle';
+    row.appendChild(toggleCell);
     bookTable.appendChild(row);
 }
 
@@ -94,8 +110,7 @@ saveBookButton.addEventListener('click', (e) => {
     e.preventDefault();
     const data = new FormData(newBookForm);
     const book = Object.fromEntries(data.entries());
-    console.log(book);
-    addBookToLibrary(book);
+    addBookToLibrary(new Book(book.title, book.author, book.pages, book.read));
     bookDialog.close();
     updateBookTable();
 })
@@ -108,6 +123,13 @@ cancelButton.addEventListener('click', (e) => {
 function removeBookEventHandler(button, index) {
     button.addEventListener('click', (e) => {
         myLibrary.splice(index, 1);
+        updateBookTable();
+    })
+}
+
+function toggleReadEventHandler(button, index) {
+    button.addEventListener('click', (e) => {
+        myLibrary[index].toggleRead();
         updateBookTable();
     })
 }
