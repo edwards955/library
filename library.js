@@ -1,3 +1,42 @@
+class Book {
+    constructor(title, author, pages, read) {
+        this._title = title;
+        this._author = author;
+        this._pages = pages;
+        this._read = read;
+    }
+
+    info = () => `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
+
+    toggleRead = () => {
+        if (this.read === 'not yet read') {
+            this.read = 'read';
+        } else {
+            this.read = 'not yet read';
+        }
+    }
+
+    get title() {
+        return this._title;
+    }
+
+    get author() {
+        return this._author;
+    }
+
+    get pages() {
+        return this._pages;
+    }
+
+    get read() {
+        return this._read;
+    }
+
+    set read(value) {
+        this._read = value;
+    }
+}
+
 // Create Library Array for storing book information
 let myLibrary = [
     new Book('Batman: Year One', "Frank Miller", 250, "not yet read"),
@@ -15,22 +54,6 @@ const cancelButton = document.querySelector('#cancel');
 
 // Update page with book data upon initial load
 updateBookTable();
-
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.info = () => `${title} by ${author}, ${pages} pages, ${read}`;
-}
-
-Book.prototype.toggleRead = function() {
-    if (this.read === 'not yet read') {
-        this.read = 'read';
-    } else {
-        this.read = 'not yet read';
-    }
-}
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
